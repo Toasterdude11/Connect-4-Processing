@@ -1,32 +1,35 @@
-
 circleSize = 130
 selectorX = 740
+selectorY = 140
+
 
 def setup():
     size(1500, 1200)
     background(255)
     noStroke()
-    global selectorX, circleSize, player, Left, Right, One, Two
+    global selectorX, selectorY, circleSize, player, Left, Right, Down, One, Two, EndTurn
     
-    One = False
+    One = True
     Two = False
+    EndTurn = False
     Right = False
     Left = False
- 
+    Down = False
                
 def draw():
-    global selectorX, circleSize, player, Left, Right, One, Two
+    global selectorX, selectorY, circleSize, player, Left, Right, Down, One, Two, EndTurn
     
     #draw the gameboard
     gameboard()
 
+    
     #if right arrow is True, player (yellow or red) moves one slot to the right and has to stop at the end of the gameboard
     if Right:
         if selectorX <= 1100:
             background(255)
             gameboard()
             selectorX += 180
-            player(selectorX, 100)
+            player(selectorX, selectorY)
             Right = False
         elif selectorX > 1100:
             Right = False
@@ -37,15 +40,23 @@ def draw():
             background(255)
             gameboard()
             selectorX -= 180
-            player(selectorX,100)
+            player(selectorX,selectorY)
             Left = False
         elif selectorX < 380:    
             Left = False
-    
+    if Down: 
+        if selectorY <= 1040:
+            background(255)
+            gameboard()
+            selectorY += 160
+            player(selectorX,selectorY)
+            Down = False
+        elif selectorY > 1040:
+            Down = False
     else:
         background(255)
         gameboard()
-        player(selectorX,100)
+        player(selectorX,selectorY)
 
 
 #gameboard drawing
@@ -80,25 +91,25 @@ def gameboard():
 
 #player1 or 2 drawing, 1 is red, 2 is yellow          
 def player(x, y):
-    global selectorX
+    global selectorX, selectorY
     #player1 is red
     if One:
         fill(255, 0, 0)
-        ellipse(selectorX, y, circleSize, circleSize)
+        ellipse(selectorX, selectorY, circleSize, circleSize)
         stroke(200, 0, 0) #darker red
     #player2 is yellow
     elif Two:
         fill(255, 255, 0)
-        ellipse(selectorX, y, circleSize, circleSize)
+        ellipse(selectorX, selectorY, circleSize, circleSize)
         stroke(200, 200, 0)
     strokeWeight(5)
-    ellipse(selectorX, y, circleSize / 1.3, circleSize / 1.3)
+    ellipse(selectorX, selectorY, circleSize / 1.3, circleSize / 1.3)
     strokeWeight(1)
-    ellipse(selectorX, y, circleSize / 1.5, circleSize / 1.5)
+    ellipse(selectorX, selectorY, circleSize / 1.5, circleSize / 1.5)
 
 
 def keyPressed():
-    global selectorX, circleSize, player1, Drop, Left, Right, One, Two
+    global selectorX, selectorY, circleSize, player1, Drop, Left, Right, Down, One, Two, EndTurn
     
     #if 1 is pressed player1 (red) is True, if 2 is pressed player2 (yellow) is True
     if key == '1':
@@ -107,9 +118,16 @@ def keyPressed():
     elif key == '2':
         Two = True
         One = False
+    
+    
+    
         
     #if right arrow key is pressed it's True, if left arrow key is pressed it's True
     if keyCode == RIGHT:
         Right = True
     elif keyCode == LEFT:
         Left = True
+    
+    
+    elif keyCode == DOWN:
+        Down = True
