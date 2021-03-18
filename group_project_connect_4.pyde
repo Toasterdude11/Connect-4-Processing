@@ -1,5 +1,5 @@
 circleSize = 130
-selectorX = 200
+selectorX = 740
 
 One = False
 Two = False
@@ -8,7 +8,8 @@ Four = False
 Five = False
 Six = False
 Seven = False
-
+Right = False
+Left = False
 Drop = False
 
 
@@ -16,56 +17,47 @@ def setup():
     size(1500, 1200)
     background(255)
     noStroke()
-    global selectorX, circleSize, One, Two, Three, Four, Five, Six, Seven, Drop, player1
+    global selectorX, circleSize, Drop, player1, Left, Right
 
         
 def draw():
-    global selectorX, circleSize, One, Two, Three, Four, Five, Six, Seven, Drop, player1
+    global selectorX, circleSize, Drop, player1, Left, Right
     
     gameboard()
 
-    if One:
-        background(255)
-        gameboard()
-        player1(200, 100)
-        One = False
-
-    elif Two:
-        background(255)
-        gameboard()
-        player1(380, 100)
-        Two = False
     
-    elif Three:
+   
+
+    if Right:
+        if selectorX <= 1100:
+            background(255)
+            gameboard()
+            selectorX += 180
+            player1(selectorX,100)
+            Right = False
+        elif selectorX > 1100:
+            Right = False
+        
+        
+    if Left:
+        if selectorX >= 380:
+            background(255)
+            gameboard()
+            selectorX -= 180
+            player1(selectorX,100)
+            Left = False
+        elif selectorX < 380:    
+            Left = False
+    
+    else:
         background(255)
         gameboard()
-        player1(560, 100)
-        Three = False
+        player1(selectorX,100)
+
+
+     
         
-    elif Four:
-        background(255)
-        gameboard()
-        player1(740, 100)
-        Four = False
-        
-    elif Five:
-        background(255)
-        gameboard()
-        player1(920, 100)
-        Five = False
-        
-    elif Six:
-        background(255)
-        gameboard()
-        player1(1100, 100)
-        Six = False
-        
-    elif Seven:
-        background(255)
-        gameboard()
-        player1(1280, 100)
-        Seven = False
-        
+   
     #elif Drop:
         #background(255)
         #gameboard()
@@ -100,33 +92,28 @@ def gameboard():
             ellipse(x, y, circleSize, circleSize)
             
 def player1(x, y):
+    global selectorX
+    
     fill(255, 0, 0)
-    ellipse(x, y, circleSize, circleSize)
+    ellipse(selectorX, y, circleSize, circleSize)
     stroke(200, 0, 0)
     strokeWeight(5)
-    ellipse(x, y, circleSize / 1.3, circleSize / 1.3)
+    ellipse(selectorX, y, circleSize / 1.3, circleSize / 1.3)
     strokeWeight(1)
-    ellipse(x, y, circleSize / 1.5, circleSize / 1.5)
+    ellipse(selectorX, y, circleSize / 1.5, circleSize / 1.5)
 
 
 
 def keyPressed():
-    global selectorX, circleSize, player1, One, Two, Three, Four, Five, Six, Seven, Drop
+    global selectorX, circleSize, player1, Drop, Left, Right
     
-    if key == '1':
-        One = True
-    if key == '2':
-        Two = True
-    if key == '3':
-        Three = True
-    if key == '4':
-        Four = True
-    if key == '5':
-        Five = True
-    if key == '6':
-        Six = True
-    if key == '7':
-        Seven = True
+    
+    if keyCode == RIGHT:
+        Right = True
+    elif keyCode == LEFT:
+        Left = True
+   
+    
         
-    #if key == ' ':
-        #Drop = True
+    if key == ' ':
+        Drop = True
