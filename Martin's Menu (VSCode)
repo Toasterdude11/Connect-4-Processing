@@ -1,0 +1,21 @@
+Menu = True
+ 
+P1vCpu = False
+P1vP2 = False
+ 
+mode = None
+if Menu:
+    while mode not in ("1", "2"):
+        mode = input("Press 1 for P1vCPU Press 2 for P1vP2: ")
+        if mode == "1":
+            P1vCpu = True
+            break
+        elif mode == "2":
+            P1vP2 = True
+            break
+        else:
+            print("Please select a game mode")
+            continue
+ 
+#elif P1vCPU:        
+#elif P1vP2:
